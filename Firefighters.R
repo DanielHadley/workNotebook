@@ -115,13 +115,18 @@ RegularYearSim <- function(nsims){
     
     OneYearFinal <- merge(OneYear, new)
     OneYearFinal$TotalCost <- OneYearFinal$Missed * OneYearFinal$CostPerMissed
-    i = sum(OneYearFinal$TotalCost)
-    print(i)
+    totalCost = sum(OneYearFinal$TotalCost)
+    totalMissed = sum(OneYearFinal$Missed)
+    costPerShift = totalCost / totalMissed
+    print(paste("Total Cost: $", round(totalCost)))
+    print(paste("Total Missed Shifts:", totalMissed))
+    print(paste("Cost Per Shift:", round(costPerShift)))
+    
   }
 }
 
 
-ShiftedYearSim <- function(nsims, avgPeak, avgOffPeak){
+ShiftedYearSim <- function(nsims, avgOffPeak, avgPeak){
   for (i in 1:nsims) {
     OffPeakSim <- rtruncnorm(n=178, a=0.5, b=5, m=avgOffPeak, sd=1.25) 
     # I round so that I can combine with averages later
@@ -140,7 +145,14 @@ ShiftedYearSim <- function(nsims, avgPeak, avgOffPeak){
     
     OneYearFinal <- merge(OneYear, new)
     OneYearFinal$TotalCost <- OneYearFinal$Missed * OneYearFinal$CostPerMissed
-    i = sum(OneYearFinal$TotalCost)
-    print(i)
+    totalCost = sum(OneYearFinal$TotalCost)
+    totalMissed = sum(OneYearFinal$Missed)
+    costPerShift = totalCost / totalMissed
+    print(paste("Total Cost: $", round(totalCost)))
+    print(paste("Total Missed Shifts:", totalMissed))
+    print(paste("Cost Per Shift:", round(costPerShift)))
   }
 }
+
+RegularYearSim(1)
+ShiftedYearSim(1, 5, 9)
